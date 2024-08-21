@@ -49,12 +49,16 @@
  * project, please see <http://www.apache.org/>.
  */
 #include <stdint.h>
-#include <netdb.h>
+//#include <netdb.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
+//#include <arpa/inet.h>
+
+#include <windows.h>
+#include <winsock.h>
+#include <time.h>
 
 #include "httpd.h"
 #include "http_config.h"
