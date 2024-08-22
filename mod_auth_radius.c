@@ -775,6 +775,10 @@ static int radius_authenticate(request_rec *r,
 			      strlen((char *)rec->calling_station_id));
 	}
 
+	/* Add Message-Authenticator attribute with zeroes */
+	uint8_t zero_authenticator[16] = { 0 };
+	attribute_add(packet, RADIUS_MESSAGE_AUTHENTICATOR, zero_authenticator, 16);
+	
 	/* add state, if requested */
 	if (state != NULL) {
 		attribute_add(packet, RADIUS_STATE, (uint8_t *)state, strlen(state));
