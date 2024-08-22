@@ -132,6 +132,42 @@ typedef struct radius_packet_t {
 #define RADIUS_CALLING_STATION_ID     31
 #define RADIUS_NAS_IDENTIFIER         32
 
+/* MD5 function for use when calculating Message_Authenticator */
+static void hmac_md5(const uint8_t* key, int key_len, const uint8_t* data, int data_len, uint8_t* digest)
+{
+	apr_md5_ctx_t context;
+	uint8_t k_ipad[64];
+	uint8_t k_opad[64];
+	uint8_t tk[16];
+	int i;
+
+	if (key_len > 64) {
+		apr_md5(tk, key, key_len);
+		key = tk;
+		key_len = 16;
+	}
+
+	memset(k_ipad, 0, sizeof(k_ipad));
+	memset(k_opad, 0, sizeof(k_opad));
+	memcpy(k_ipad, key, key_len);
+	memcpy(k_opad, key, key_len);
+
+	for (i = 0; i < 64; i++) {
+		k_ipad[i] ^= 0x36;
+		k_opad[i] ^= 0x5c;
+	}
+
+	apr_md5_init(&context);
+	apr_md5_update(&context, k_ipad, 64);
+	apr_md5_update(&context, data, data_len);
+	apr_md5_final(digest, &context);
+
+	apr_md5_init(&context);
+	apr_md5_update(&context, k_opad, 64);
+	apr_md5_update(&context, digest, 16);
+	apr_md5_final(digest, &context);
+}
+
 /* service types : authenticate only for now */
 #define RADIUS_AUTHENTICATE_ONLY      8
 
