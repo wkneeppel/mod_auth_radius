@@ -95,7 +95,6 @@
 #define RADIUS_DEFAULT_WAIT          5
 #define RADIUS_DEFAULT_RETRIES       0
 #define RADIUS_DEFAULT_TIMEOUT       60
-#define RADIUS_MESSAGE_AUTHENTICATOR  80
 
 /* Per-attribute structure */
 typedef struct attribute_t {
@@ -131,6 +130,7 @@ typedef struct radius_packet_t {
 #define RADIUS_SESSION_TIMEOUT        27
 #define RADIUS_CALLING_STATION_ID     31
 #define RADIUS_NAS_IDENTIFIER         32
+#define RADIUS_MESSAGE_AUTHENTICATOR  80
 
 /* MD5 function for use when calculating Message_Authenticator */
 static void hmac_md5(const uint8_t* key, int key_len, const uint8_t* data, int data_len, uint8_t* digest)
