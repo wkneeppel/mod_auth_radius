@@ -95,6 +95,7 @@
 #define RADIUS_DEFAULT_WAIT          5
 #define RADIUS_DEFAULT_RETRIES       0
 #define RADIUS_DEFAULT_TIMEOUT       60
+#define RADIUS_MESSAGE_AUTHENTICATOR  80
 
 /* Per-attribute structure */
 typedef struct attribute_t {
