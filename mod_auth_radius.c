@@ -788,6 +788,12 @@ static int radius_authenticate(request_rec *r,
 	total_length = packet->length;
 	packet->length = htons(packet->length);
 
+	/* Calculate and replace Message-Authenticator */
+	uint8_t* auth_attr = (uint8_t*)attribute_find_by_num(packet, RADIUS_MESSAGE_AUTHENTICATOR);
+	if (auth_attr) {
+		hmac_md5((uint8_t*)scr->secret, scr->secret_len, (uint8_t*)packet, total_length, auth_attr + 2);
+	}
+	
 	sin = (struct sockaddr_in *)&saremote;
 	memset((char *)sin, '\0', sizeof(saremote));
 	sin->sin_family = AF_INET;
