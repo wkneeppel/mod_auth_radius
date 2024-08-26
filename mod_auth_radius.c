@@ -412,6 +412,9 @@ static const char *radius_server_add(cmd_parms *cmd,
 
 	scr = ap_get_module_config(cmd->server->module_config, &radius_auth_module);
 
+	/* allocate memory for the RADIUS server's IP address */
+	scr->radius_ip = (struct in_addr*)apr_pcalloc(cmd->pool, sizeof(struct in_addr));
+	
 	/* Check to see if there's a port in the server name */
 	if ((p = strchr(server, ':')) != NULL) {
 		*(p++) = 0;            /* hammer a zero in it */
