@@ -554,6 +554,9 @@ static int packet_verify(request_rec *r,
 	return 0;
 }
 
+/* Forward declaration of this function */
+static attribute_t* attribute_find_by_num(radius_packet_t* packet, uint8_t type);
+
 static void attribute_add(radius_packet_t *packet,
 			  int type,
 			  const uint8_t *data,
